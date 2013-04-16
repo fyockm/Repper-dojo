@@ -3,15 +3,21 @@ define([
     "dojo/_base/lang",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
+    "dojo/store/Memory",
+    "dijit/form/TextBox",
     "dgrid/OnDemandGrid",
-    "dojo/text!./templates/RepperGridWidget.html"
+    "dojo/text!./templates/RepperGridWidget.html",
+    "dojo/i18n!./nls/RepperGridWidget"
 ], function (
     declare,
     lang,
     _WidgetBase,
     _TemplatedMixin,
+    Memory,
+    TextBox,
     OnDemandGrid,
-    template
+    template,
+    nls
 ) {
     return declare([_WidgetBase, _TemplatedMixin], {
         store: null,
@@ -26,33 +32,20 @@ define([
             this.inherited(arguments);
             this.gridWidget = this.buildGrid();
         },
-        
-        startup: function () {
-            this.gridWidget.startup();
-        },
 
         buildGrid: function () {
             var columns = {
-                reps: {
-                    label: 'Reps',
-                    field: "reps",
-                },
-                weight: {
-                    label: 'Weight',
-                    field: "weight",
-                },
-                units: {
-                    label: '',
-                    field: "units",
+                lift: {
+                    label: nls.gridColumnLabel,
+                    field: 'lift',
                 }
             };
             return new (declare([OnDemandGrid]))({
                 store: this.store,
                 columns: columns,
-                queryOptions: { sort: [{ attribute: 'weight', descending: true }] },
-                loadingMessage: 'Loading...',
-                noDataMessage: 'No Releases Available'
-            }, this.gridNode);
+                loadingMessage: nls.gridLoadingState,
+                noDataMessage: nls.gridNoData
+            }, this.gridWidgetNode);
         }
     });
 });

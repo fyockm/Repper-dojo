@@ -9,7 +9,7 @@ define([
     "dojo/store/Memory",
     "dojo/dom-attr",
     "dojo/text!./templates/RepperInputWidget.html",
-    "dojo/i18n!./nls/RepperInputWidget"
+    "dojo/i18n!./nls/RepperGridWidget"
 ], function (
     declare,
     lang,
@@ -41,45 +41,50 @@ define([
             this.inputCalcButtonWidget = this.buildCalcButton();
         },
         
-        startup: function () {
-            this.inputCalcButtonWidget.startup();
-        },
-        
         buildInputForm: function () {
         	this.inputWeightTextBox = new NumberTextBox({
                 'class': domAttr.get(this.weightInputNode, 'class'), // allow the class to be set in the template
-                value: 200,
+                constraints: { min:10, max:1000, places:0},
                 required: "true"
             }, this.weightInputNode);
             
             this.inputUnitsSelect = new Select({
 	            name: "units",
 	            options: [
-	                { label: "LB", value: "LB (pounds)"},
-	                { label: "KG", value: "KG (kilos)" },
-	                { label: "ST", value: "ST (stones)" }
+	                { label: "lb (pounds)", value: "lb"},
+	                { label: "kg (kilos)", value: "kg" },
+	                { label: "st (stones)", value: "st" }
 	            ]
             }, this.unitsInputNode);
             
         	this.inputRepsTextBox = new NumberTextBox({
                 'class': domAttr.get(this.repsInputNode, 'class'), // allow the class to be set in the template
-                value: 10,
+                constraints: { min:1, max:15, places:0},
                 required: "true"
             }, this.repsInputNode);
         },
         
         buildCalcButton: function () {
             var onClick = function () {
-            	var repList = [];
-            	var weightValue = Number(this.inputWeightTextBox.value);
-        		var orm = 36 * this.inputWeightTextBox / (37 - this.inputRepsTextBox);
-        		for (var i=0;i<10;i++) {
-	        		repList[i] = {
-	        			weight: Math.round(orm * (37 - (i+1)) / 36),
-	        			units: this.inputUnitsSelect.value
-	        		};
-	        	}
-	        	this.store = new Memory({data:repList});
+                if (!this.inputRepsTextBox.isValid() || !this.inputWeightTextBox.isValid) { 
+                    alert('Form contains invalid data.  Please correct first');
+                    return false;
+                }
+                var orm = 36 * this.inputWeightTextBox / (37 - this.inputRepsTextBox);
+                for (var i=0;i<10;i++) {
+                    this.store.notify({
+                        id: i,
+                        lift: {
+                            weight: Math.round(orm * (37 - (i+1)) / 36),
+                            units: this.inputUnitsSelect.value,
+                            reps: i+1,
+                            toString: function  () {
+                                return this.weight + " " + this.units + " x " + this.reps;
+                            }
+                        }
+                    },i); 
+                }
+                return true;
             };
             
             return new Button({

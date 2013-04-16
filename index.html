@@ -19,7 +19,8 @@
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css">
         <script src="/js/vendor/dojo/dojo/dojo.js"></script>
         <script>
-            require(['repper/js/ui/home/HomePage', 'dojo/domReady!'], function(HomePage) {
+            require(['repper/js/ui/home/HomePage', 'dojo/domReady!'], 
+            function(HomePage) {
                 var page = new HomePage({}, 'page');
                 page.startup();
             });
