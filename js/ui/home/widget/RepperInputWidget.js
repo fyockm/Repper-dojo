@@ -8,8 +8,8 @@ define([
     "dijit/form/Select",
     "dojo/store/Memory",
     "dojo/dom-attr",
-    "dojo/text!./templates/RepperInputWidget.html",
-    "dojo/i18n!./nls/RepperGridWidget"
+    "dojo/text!repper/widget/templates/RepperInputWidget.html",
+    "dojo/i18n!repper/widget/nls/RepperGridWidget"
 ], function (
     declare,
     lang,
@@ -45,7 +45,8 @@ define([
         	this.inputWeightTextBox = new NumberTextBox({
                 'class': domAttr.get(this.weightInputNode, 'class'), // allow the class to be set in the template
                 constraints: { min:10, max:1000, places:0},
-                required: "true"
+                required: "true",
+                placeHolder: nls.weightLabel
             }, this.weightInputNode);
             
             this.inputUnitsSelect = new Select({
@@ -60,7 +61,8 @@ define([
         	this.inputRepsTextBox = new NumberTextBox({
                 'class': domAttr.get(this.repsInputNode, 'class'), // allow the class to be set in the template
                 constraints: { min:1, max:15, places:0},
-                required: "true"
+                required: "true",
+                placeHolder: nls.repsLabel
             }, this.repsInputNode);
         },
         

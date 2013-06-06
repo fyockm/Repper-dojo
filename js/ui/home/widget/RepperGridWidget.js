@@ -6,8 +6,8 @@ define([
     "dojo/store/Memory",
     "dijit/form/TextBox",
     "dgrid/OnDemandGrid",
-    "dojo/text!./templates/RepperGridWidget.html",
-    "dojo/i18n!./nls/RepperGridWidget"
+    "dojo/text!repper/widget/templates/RepperGridWidget.html",
+    "dojo/i18n!repper/widget/nls/RepperGridWidget"
 ], function (
     declare,
     lang,

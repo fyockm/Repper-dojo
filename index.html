@@ -4,22 +4,25 @@
         <meta charset="utf-8">
         <title>Repper</title>
         <script>
-            var dojoConfig = {
-                async: 1,
-                cacheBust: 1,
+            dojoConfig = {
+                async: true,
+                baseUrl: '/sbd/prj/repperdojo/js/',
                 packages: [
-                    { name: 'repper', location: '../../../..' },
-                    { name: 'dijit', location: '../../dijit' },
-                    { name: 'dgrid', location: '../../SitePen/dgrid' },
-                    { name: 'xstyle', location: '../../kriszyp/xstyle' },
-                    { name: 'put-selector', location: '../../kriszyp/put-selector' }
+                    { name: 'repper', location: 'ui/home' },
+                    { name: 'dgrid', location: 'vendor/SitePen/dgrid' },
+                    { name: 'xstyle', location: 'vendor/kriszyp/xstyle' },
+                    { name: 'put-selector', location: 'vendor/kriszyp/put-selector' }
                 ]
             };
         </script>
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css">
-        <script src="/js/vendor/dojo/dojo/dojo.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/claro/claro.css">
+        
+        <!-- load dojo & dijit-->
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/dijit.js"></script>
+
         <script>
-            require(['repper/js/ui/home/HomePage', 'dojo/domReady!'], 
+            require(['repper/HomePage', 'dojo/domReady!'], 
             function(HomePage) {
                 var page = new HomePage({}, 'page');
                 page.startup();
